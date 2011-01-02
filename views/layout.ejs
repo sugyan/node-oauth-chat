@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>
+      <% if (title) { %><%= title %><% } else { %>default title<% } %>
+    </title>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">google.load("jquery", "1.4.4");</script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <% for (var i = 0; i < js.length; i++) { %>
+      <script type="text/javascript" src="/js/<%= js[i] %>"></script>
+    <% } %>
+  </head>
+  <body>
+    <div id="header">
+      <% if (session.user) { %>
+      hi, <%= session.user %>! <a href="/signout">sign out</a>
+      <% } else { %>
+      <a href="/signin/twitter">sign in</a>
+      <% } %>
+    </div>
+    <%- body %>
+  </body>
+</html>
