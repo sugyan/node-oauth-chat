@@ -25,6 +25,7 @@ conf.initConfig(function(err) {
     });
 
     app.set('view engine', 'ejs');
+    app.set('views', __dirname + '/views');
     app.helpers({
         title: undefined,
         js: []
