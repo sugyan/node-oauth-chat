@@ -9,6 +9,7 @@ input#textfield {
     width: 450px;
 }
 dt {
+    font-size: small;
     color: #808080;
     padding-top: 10px;
 }
@@ -17,4 +18,10 @@ dd span.message {
 }
 span.announce {
     color: #806040;
+}
+
+@media screen and (max-device-width: 480px) {
+    input#textfield {
+        width: 300px;
+    }
 }

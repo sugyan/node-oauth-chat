@@ -36,7 +36,7 @@ conf.initConfig(function(err) {
     });
 
     app.get('/', function(req, res) {
-        res.render('index', { locals: { js: ['index.js'] } });
+        res.render('index', { locals: { js: ['index.js'], title: 'node-oauth-chat' } });
     });
     app.get('/signin/twitter', function(req, res) {
         var oauth_token    = req.query.oauth_token;
