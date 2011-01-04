@@ -93,7 +93,7 @@ socket.on('connection', sws.ws(
                 date: (new Date()).toLocaleString()
             };
             messages.push(ret);
-            if (messages.length > 50) {
+            if (messages.length > 100) {
                 messages.shift();
             }
             return ret;
