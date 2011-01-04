@@ -64,7 +64,6 @@ conf.initConfig(function(err) {
                         oauth_token_secret: oauth_token_secret,
                         request_token_results: results
                     };
-                    console.log(req.session.oauth);
                     res.redirect('https://api.twitter.com/oauth/authorize?oauth_token=' + oauth_token);
                 }
             });
