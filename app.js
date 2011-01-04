@@ -1,6 +1,7 @@
 var express = require('express');
 var app     = express.createServer();
 var io      = require('socket.io');
+var sws     = require('SessionWebSocket')();
 
 var conf = require('node-config');
 conf.initConfig(function(err) {
@@ -20,6 +21,7 @@ conf.initConfig(function(err) {
         app.use(express.staticProvider({ root: __dirname + '/static' }));
         app.use(express.cookieDecoder());
         app.use(express.session());
+        app.use(sws.http);
     });
 
     app.set('view engine', 'ejs');
@@ -79,6 +81,33 @@ conf.initConfig(function(err) {
 
 
 var socket = io.listen(app);
-socket.on('connection', function(client) {
-    console.log('connection');
-});
+socket.on('connection', sws.ws(
+    function(client) {
+        var user = client.sessionId;
+        function create_message(msg) {
+            return {
+                user: user,
+                date: (new Date()).toLocaleString(),
+                type: 'announce',
+                message: msg
+            }
+        }
+        client.on('secure', function() {
+            if (client.session.user) {
+                user = client.session.user;
+            }
+            var message  = create_message('connected.');
+            client.send(message);
+            client.broadcast(message);
+        });
+        client.on('message', function(msg) {
+            var message = create_message(msg);
+            message.type = 'chat';
+            client.send(message);
+            client.broadcast(message);
+        });
+        client.on('disconnect', function() {
+            client.broadcast(create_message('disconnected.'));
+        });
+    }
+));

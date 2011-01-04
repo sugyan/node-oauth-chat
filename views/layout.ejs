@@ -6,16 +6,18 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">google.load("jquery", "1.4.4");</script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/js/lib/sws.js"></script>
     <% for (var i = 0; i < js.length; i++) { %>
       <script type="text/javascript" src="/js/<%= js[i] %>"></script>
     <% } %>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
     <div id="header">
       <% if (session.user) { %>
-      hi, <%= session.user %>! <a href="/signout">sign out</a>
+      hi, <span class="username"><%= session.user %></span>! <a href="/signout">sign out</a>
       <% } else { %>
-      <a href="/signin/twitter">sign in</a>
+      <a href="/signin/twitter">sign in with Twitter</a>
       <% } %>
     </div>
     <%- body %>

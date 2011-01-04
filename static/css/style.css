@@ -1,0 +1,20 @@
+* {
+    font-family: sans-serif;
+}
+
+span.username {
+    color: #0000FF;
+}
+input#textfield {
+    width: 450px;
+}
+dt {
+    color: #808080;
+    padding-top: 10px;
+}
+dd span.message {
+    padding-left: 10px;
+}
+span.announce {
+    color: #806040;
+}
