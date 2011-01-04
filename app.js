@@ -80,24 +80,32 @@ conf.initConfig(function(err) {
 });
 
 
+var messages = [];
 var socket = io.listen(app);
 socket.on('connection', sws.ws(
     function(client) {
         var user = client.sessionId;
         function create_message(msg) {
-            return {
+            var ret = {
                 user: user,
-                date: (new Date()).toLocaleString(),
                 type: 'announce',
-                message: msg
+                message: msg,
+                date: (new Date()).toLocaleString()
+            };
+            messages.push(ret);
+            if (messages.length > 50) {
+                messages.shift();
             }
+            return ret;
         }
         client.on('secure', function() {
             if (client.session.user) {
                 user = client.session.user;
             }
             var message  = create_message('connected.');
-            client.send(message);
+            for (var i = 0; i < messages.length; i++) {
+                client.send(messages[i]);
+            }
             client.broadcast(message);
         });
         client.on('message', function(msg) {
